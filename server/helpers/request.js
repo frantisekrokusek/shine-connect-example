@@ -18,6 +18,7 @@ const QWAC_KEY = fs.readFileSync(config.QWAC_KEY_PATH);
 const QSEAL_KEY = fs.readFileSync(config.QSEAL_KEY_PATH);
 const QWAC_CERT = fs.readFileSync(config.QWAC_CERT_PATH);
 const ROOT_CERT = fs.readFileSync(config.ROOT_CA_PATH);
+const SHINE_ROOT_CERT = fs.readFileSync(config.SHINE_ROOT_CA_PATH);
 
 const getRequiredQsealHeaders = () => [
   '(request-target)',
@@ -96,7 +97,7 @@ const doRequest = ({ method, path, authorization, payload }) =>
       // Client certificates for mutual TLS authentication
       key: QWAC_KEY,
       cert: QWAC_CERT,
-      ca: ROOT_CERT,
+      ca: [SHINE_ROOT_CERT, ROOT_CERT],
     };
 
     // Make the HTTPS request
